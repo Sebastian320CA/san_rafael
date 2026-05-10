@@ -23,15 +23,15 @@ public class ProductEntity {
     @ToString.Include
     private long id;
 
-    @Column(name = "userName", length = 60, nullable = false)
+    @Column(name = "productName", length = 60, nullable = false)
     @ToString.Include
-    private String userName;
+    private String productName;
     /*
     * Esta es una relación uno a muchos ya que un producto puede tener muchos reportes asociados y mappedBy
     * nos indica que la relación es controlada directamente por el atributo, lo cual es que ProductEntity no es el
     * dueño de la relación, solamente lo esta referenciando.
     * */
-    @OneToMany(mappedBy = "reporteredBy")
+    @OneToMany(mappedBy = "product")
     /*
     * Lista de reportes asociadas con el producto.
     * */

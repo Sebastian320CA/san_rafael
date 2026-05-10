@@ -39,3 +39,5 @@ public record Report(
         return events.stream().anyMatch(event -> event.equals(condition));
     }
 }
+
+
