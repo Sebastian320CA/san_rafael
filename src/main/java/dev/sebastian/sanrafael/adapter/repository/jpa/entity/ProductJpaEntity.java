@@ -1,4 +1,4 @@
-package dev.sebastian.sanrafael.core.entity;
+package dev.sebastian.sanrafael.adapter.repository.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import java.util.List;
  * Este es el nombre de la tabla en la base de datos.
  */
 @Table(name = "PRODUCTS")
-public class ProductEntity {
+public class ProductJpaEntity {
     /*
      * Id, es el identificador univo del evente la cual es la llave primaria.
      */
@@ -35,5 +35,5 @@ public class ProductEntity {
     /*
     * Lista de reportes asociadas con el producto.
     * */
-    private List<ReportEntity> reports;
+    private List<ReportJpaEntity> reports;
 }

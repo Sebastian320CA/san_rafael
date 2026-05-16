@@ -36,7 +36,7 @@ public record Report(
     * Este boolean isAnyEventWithCondition se encarga de verificar si existe al menos un evento con la condición indicada.
     * */
     private boolean isAnyEventWithCondition(Condition condition) {
-        return events.stream().anyMatch(event -> event.equals(condition));
+        return events.stream().anyMatch(event -> event.condition() == condition);
     }
 }
 

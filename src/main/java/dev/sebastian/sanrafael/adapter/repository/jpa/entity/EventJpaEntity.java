@@ -1,4 +1,4 @@
-package dev.sebastian.sanrafael.core.entity;
+package dev.sebastian.sanrafael.adapter.repository.jpa.entity;
 
 
 import dev.sebastian.sanrafael.core.constant.Condition;
@@ -14,7 +14,7 @@ import lombok.ToString;
 * Este es el nombre de la tabla en la base de datos.
 */
 @Table(name = "EVENTS")
-public class EventEntity {
+public class EventJpaEntity {
 
     /*
     * Id, es el identificador univo del evente la cual es la llave primaria.
@@ -40,5 +40,5 @@ public class EventEntity {
     * */
     @ManyToOne
     @JoinColumn(name = "id_report", nullable = false)
-    private ReportEntity report;
+    private ReportJpaEntity report;
 }

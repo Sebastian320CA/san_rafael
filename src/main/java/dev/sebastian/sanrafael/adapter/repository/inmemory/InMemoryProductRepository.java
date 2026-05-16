@@ -4,11 +4,12 @@ import dev.sebastian.sanrafael.core.entity.Event;
 import dev.sebastian.sanrafael.core.entity.Product;
 import dev.sebastian.sanrafael.core.entity.Report;
 import dev.sebastian.sanrafael.core.port.ProductRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class InMemoryProductRepository implements ProductRepository {
 
     private final List<Product> products = new ArrayList<>();
@@ -20,9 +21,10 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product findProductByName(String productName) {
-       return products.stream()
-               .filter(p-> p.name().equals(productName))
-               .findFirst().orElse(null);
+        return products.stream()
+                .filter(p -> p.name().equals(productName))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

@@ -5,6 +5,5 @@ import dev.sebastian.sanrafael.core.entity.Product;
 
 public interface HealthReportGateway {
     ReportDTO getHealthReport(String productName);
-
 }
 
