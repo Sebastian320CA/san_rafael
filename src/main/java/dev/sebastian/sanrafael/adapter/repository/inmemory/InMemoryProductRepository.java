@@ -6,11 +6,13 @@ import dev.sebastian.sanrafael.core.entity.Report;
 import dev.sebastian.sanrafael.core.port.ProductRepository;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class InMemoryProductRepository implements ProductRepository {
+
 
     private final List<Product> products = new ArrayList<>();
 
@@ -65,6 +67,6 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product findByName(String productName) {
-        return null;
+        return findProductByName(productName);
     }
 }

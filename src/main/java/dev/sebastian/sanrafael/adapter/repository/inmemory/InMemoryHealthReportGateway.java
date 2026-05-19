@@ -5,6 +5,7 @@ import dev.sebastian.sanrafael.core.dto.ReportDTO;
 import dev.sebastian.sanrafael.core.entity.Product;
 import dev.sebastian.sanrafael.core.port.HealthReportGateway;
 import dev.sebastian.sanrafael.core.port.ProductRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-@Repository
+@Component
 public class InMemoryHealthReportGateway implements HealthReportGateway {
 
 

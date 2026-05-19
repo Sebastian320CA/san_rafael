@@ -10,68 +10,77 @@
     <link rel="icon" type="image/png" th:href="@{/images/LogoUp.png}">
 </head>
 
-<body class="bg-slate-50 pt-2">
+<body class="bg-slate-50">
 <header th:fragment="header">
-    <!-- CONTENEDOR FIJO PRINCIPAL: Mantiene unida la barra y el menú en el techo de la pantalla -->
-    <div class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-slate-300">
-
-        <!-- Barra Gobierno -->
-        <div class="w-full bg-[#F8FAFC] h-20 flex items-center justify-between px-4 sm:px-6 lg:px-8 select-none">
-
+    <!--COntenedor encargado de la imagen superior que redirije a la Pagina oficial del Gobierno de Colombia.-->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-blue-600/95 backdrop-blur-md shadow-lg border-b border-blue-700">
+        <div class="w-full bg-blue-600 h-14 flex items-center justify-between px-4 sm:px-6 lg:px-8 select-none">
             <div class="flex items-center h-full">
-
                 <a href="https://www.gov.co"
                    target="_blank"
                    rel="noopener noreferrer"
                    class="flex items-center gap-5 hover:opacity-90 transition-opacity h-full py-2">
-
-                    <img th:src="@{/images/gobierno.png}"
+                    <img th:src="@{/images/Gobierno2.png}"
                          alt="Logo GOV.CO"
                          class="h-full w-auto object-contain scale-125">
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-        <!-- 1. Barra Hospital, Logo y botones-->
-        <nav class="bg-white/75 backdrop-blur border-b border-slate-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24">
-                <div class="flex items-center justify-between h-full">
-                    <a th:href="@{/}" class="flex items-center gap-4 h-full py-2">
-                        <img th:src="@{/images/Logo3.png}"
+        <!-- Barra con el logo del hospital junto con los botones para el ingreso de administrador-->
+        <nav class="bg-white/75 backdrop-blur border-b border-slate-200 -mt-14">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-end h-full">
+                    <a th:href="@{/}" class="flex items-center gap-2">
+                        <img th:src="@{/images/Nuevo1.png}"
                              alt="HospitalSanRafael"
-                             class="h-full w-auto object-contain">
+                             class="h-20 w-auto object-contain -mt-4">
+                        <!--Barra intermedia entre logos institucionales-->
+                        <div class="w-[2px] h-24 bg-sky-500 rounded-full"></div>
+                        <img th:src="@{/images/Nuevo2.png}"
+                             alt="HospitalSanRafael"
+                             class="h-20 w-auto object-contain -mt-4">
                     </a>
-                    <div class="hidden md:flex items-center gap-8">
-                        <div class="flex items-center gap-3 ml-4">
-                            <a th:href="@{/login}"
-                               class="inline-flex px-5 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-900 text-white font-bold transition-all shadow-sm text-sm tracking-wide">
-                                Login
-                            </a>
-                            <form th:action="@{/logout}" method="post">
-                                <button type="submit"
-                                        class="inline-flex px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-900 text-white font-bold transition-all shadow-sm text-sm tracking-wide">
-                                    Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+<!--                    <div class="hidden md:flex items-center gap-8">-->
+<!--                        <div class="flex items-center gap-3 ml-4">-->
+<!--                            <a th:href="@{/login}"-->
+<!--                               class="inline-flex px-5 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-900 text-white font-bold transition-all shadow-sm text-sm tracking-wide">-->
+<!--                                Login-->
+<!--                            </a>-->
+<!--                            <form th:action="@{/logout}" method="post">-->
+<!--                                <button type="submit"-->
+<!--                                        class="inline-flex px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-900 text-white font-bold transition-all shadow-sm text-sm tracking-wide">-->
+<!--                                    Logout-->
+<!--                                </button>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
         </nav>
-    </div>
 </header>
 
 
-<footer th:fragment="footer" class="w-full text-white py-4 bg-sky-800 border-t border-sky-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-center items-center gap-4 text-center sm:text-left">
-        <img th:src="@{/images/Logo2.jpeg}" alt="Hospital Universitario San Rafael" class="h-10 w-10 rounded-full bg-white p-0.5 shadow-sm">
-        <p class="text-sm font-medium tracking-wide">
-            © Copyright 2025 - E.S.E. Hospital Universitario San Rafael Tunja - Todos los derechos reservados
-        </p>
+<footer th:fragment="footer"
+        class="w-full bg-sky-950 border-t border-sky-800 text-gray-300">
+
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+
+            <img th:src="@{/images/LogoUp.png}"
+                 alt="San Rafa"
+                 class="h-10 w-auto object-contain">
+
+            <div class="text-sm">
+                <p class="font-semibold text-white">E.S.E Hospital Universitario San Rafael de Tunja</p>
+                <p class="text-sky-400 text-xs">Sistema de Estado Operacional</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+            <div class="w-2 h-2 rounded-full bg-green-400"></div>
+            <span>Todos los servicios operativos</span>
+        </div>
+        <p class="text-xs text-white-400 text-center md:text-right">© 2026 Hospital Universitario San Rafael de Tunja</p>
     </div>
 </footer>
 </body>
