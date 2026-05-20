@@ -10,7 +10,7 @@ import java.util.Optional;
 
 /*
 * Este componente es el encargado de la conexión nativa con Spring Data a PostgreSQL para todas las entidades JPA
-*/
+s*/
 @Repository
 public interface SpringDataReportRepository extends JpaRepository<ReportJpaEntity, Long> {
     /*
