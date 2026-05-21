@@ -9,9 +9,9 @@ import java.time.LocalDate;
 
 @Component
 public class PostgresReportRepositoryAdapter implements ReportRepository {
-    private final SpringDataReportRepository springDataRepository;
+    private final JPARepository springDataRepository;
 
-    public PostgresReportRepositoryAdapter(SpringDataReportRepository springDataReportRepository) {
+    public PostgresReportRepositoryAdapter(JPARepository springDataReportRepository) {
         this.springDataRepository = springDataReportRepository;
     }
 

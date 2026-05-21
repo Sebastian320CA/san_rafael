@@ -38,7 +38,7 @@ public class StatusRequestService {
                 /*
                 * Se debe realizar la consulta HTTP
                 */
-                ReportDTO dto = healthReportGateway.getHealthReport(product.name());
+                ReportDTO dto = healthReportGateway.getHealthReport(product.healthURL());
 
                 /*
                 * Se crea el dominio con los datos que obtenemos en HTTPClient.
