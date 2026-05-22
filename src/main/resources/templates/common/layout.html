@@ -9,21 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="icon" type="image/png" th:href="@{/images/LogoUp.png}">
     <link rel="stylesheet" th:href="@{/css/Style.css}">
+    <script src="https://unpkg.com"></script>
+
 </head>
 
 <body class="bg-slate-50">
 <header th:fragment="header" class="fixed top-0 left-0 right-0 z-50 w-full shadow-md">
 
-    <!-- 1. Franja Azul Superior de GOV.CO -->
     <nav class="w-full h-10 bg-[#004884] flex items-center px-4 sm:px-6 lg:px-8 select-none barra-superior-govco">
         <a href="https://www.gov.co" target="_blank" aria-label="Portal del Estado Colombiano - GOV.CO" class="flex items-center"></a>
     </nav>
-
-    <!-- 2. Barra Principal del Hospital (Alineación interna corregida con flex e items-center) -->
     <nav class="w-full h-20 bg-white/95 backdrop-blur border-b border-slate-200 flex items-center">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-
-            <!-- Bloque Izquierdo: Botones -->
             <div class="flex items-center gap-3">
                 <a th:href="@{/login}"
                    class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8]
