@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/layout :: head}"></head>
+<body class="m-0 p-0 font-sans bg-cover bg-center bg-fixed" style="background-image: url('../images/Admin.jpeg');">
+<div class="max-w-md mx-auto mt-24 mb-12 bg-white/95 rounded-2xl p-8 shadow-xl backdrop-blur-sm border border-white/20">
+    <div class="text-center mb-8">
+        <img th:src="@{/images/LogoUp.png}" alt="SanRafa" class="mx-auto h-16 w-16 rounded-xl mb-4 shadow-md">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">
+            Acceso Administrador
+        </h1>
+        <p class="text-gray-600 text-sm">Ingresa con tus credenciales de Administrador</p>
+    </div>
+    <form th:action="@{/products/login}" method="post" class="flex flex-col gap-6" id="loginForm">
+        <div class="flex flex-col group">
+            <label for="username" class="text-gray-700 font-semibold mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-envelope text-amber-600"></i> Correo Electronico
+            </label>
+            <input type="email" id="username" name="username" placeholder=" usuario@hospitalsanrafael.com "
+                    required autocomplete="email" class="p-3 rounded-lg border border-gray-300
+                    focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all duration-300 shadow-sm">
+        </div>
+        <div class="flex flex-col group1">
+            <label for="password" class="text-gray-700 font-semibold mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-lock text-amber-600"></i>  Contraseña
+            </label>
+            <div class="relative flex items-center">
+                <input type="password" id="password" name="password" placeholder=" Ingresa tus credenciales de acceso"
+                       required autocomplete="current-password" class="w-full p-3 rounded-lg border border-gray-300
+                 focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all duration-300 shadow-sm pr-12">
+                <button type="button" onclick="togglePassword('password', this)"
+                        class="absolute right-3 text-gray-500 hover:text-amber-600 transition-colors duration-200">
+                    <i class="fa-solid fa-eye" id="eyeIcon"></i>
+            </button>
+            </div>
+        </div>
+        <button type="submit" id="loginBtn" class="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-3.5 px-4
+                rounded-lg font-bold hover:from-amber-500 hover:to-amber-600 transition-all duration-300 transform
+                hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-2 group">
+            <i class="fa-solid fa-arrow-right-to-bracket transition-transform"></i>
+            <span id="btnText">INGRESA</span>
+            <div id="spinner" class="hidden">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            </div>
+        </button>
+    </form>
+</div>
+</body>
+</html>
+
+<script>
+    function togglePassword(inputId, button) {
+        const input = document.getElementById(inputId);
+        const icon = button.querySelector('i');
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>

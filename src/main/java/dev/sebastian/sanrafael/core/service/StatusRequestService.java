@@ -27,7 +27,10 @@ public class StatusRequestService {
         this.reportRepository = reportRepository;
     }
 
-    @Scheduled(fixedRate = 1000)
+    public List<Product> findAllProducts(){
+        return repository.findAllProducts();
+    }
+
     public void requestStatusOfAllProducts(){
         List<Product> products = repository.findAllProducts();
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "+") //Esto nos permite que para aplicar al FrontEnd al momento de que se conecte, este no presente incomveniente de algun bloqueo.
+@CrossOrigin(origins = "*") //Esto nos permite que para aplicar al FrontEnd al momento de que se conecte, este no presente incomveniente de algun bloqueo.
 public class SpringAPI {
 
     private final StatusRequestService service;

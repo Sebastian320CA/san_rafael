@@ -27,7 +27,7 @@ public record Report(
             return Condition.CONDITION_ERROR;
         }
         if(isAnyEventWithCondition(Condition.CONDITION_WARNING)){
-            return Condition.CONDITION_ACTIVE;
+            return Condition.CONDITION_WARNING;
         }
         return Condition.CONDITION_ACTIVE;
     }
