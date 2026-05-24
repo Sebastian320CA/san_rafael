@@ -15,5 +15,17 @@ public class ProductController {
     public String loginAdmin(){
         return "products/login";
     }
+    @GetMapping("/productos")
+    public String showProducts(){
+        return "products/productos";
+    }
+    @GetMapping("/reportes")
+    public String showReports(){
+        return "products/reportes";
+    }
+    @GetMapping("/eventos")
+    public String showEventos(){
+        return "products/productos";
+    }
 }
 
