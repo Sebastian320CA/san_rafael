@@ -1,11 +1,93 @@
 <!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
 <head th:replace="~{common/layout :: head}"></head>
-<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen
-             flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen flex flex-col justify-between">
 <header th:replace="~{common/layout :: header}"></header>
-<main>
+
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <section class="mb-8 flex items-center justify-between flex-wrap gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-800">Bitácora de Eventos e Incidentes</h1>
+            <p class="text-sm text-slate-500 mt-1">Historial cronológico de alertas automáticas registradas en la base de datos.</p>
+        </div>
+        <button onclick="window.location.reload();" class="px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 text-sm font-medium rounded-xl border border-slate-200 shadow-sm transition-all flex items-center gap-2">
+            Actualizar (recargar página)
+        </button>
+    </section>
+
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                <tr class="border-b border-slate-100 text-slate-400 font-medium bg-slate-50">
+                    <th class="p-4 rounded-l-xl">Código</th>
+                    <th class="p-4">Gravedad</th>
+                    <th class="p-4">Detalle del Suceso o Anomalía</th>
+                    <th class="p-4 text-center">Estado</th>
+                    <th th:if="${isAdmin}" class="p-4 rounded-r-xl text-right">Acciones</th>
+                    <th th:unless="${isAdmin}" class="p-4 rounded-r-xl text-right"></th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tr th:if="${#lists.isEmpty(events)}">
+                    <td colspan="5" class="p-8 text-center text-slate-400">
+                        No hay eventos registrados.
+                    </td>
+                </tr>
+
+                <tr th:each="event : ${events}">
+
+                    <td class="p-4 font-mono text-xs text-slate-400 font-bold">
+                        <span th:text="${event.id != null} ? '# EV-' + ${event.id} : '# EV-AUTO'"></span>
+                    </td>
+
+                    <td class="p-4">
+                        <span th:if="${event.condition != null && event.condition.toString() == 'CONDITION_ERROR'}"
+                              class="px-2.5 py-0.5 rounded-md text-xs font-bold border bg-red-100 text-red-700 border-red-200">
+                            Crítico
+                        </span>
+                        <span th:if="${event.condition != null && event.condition.toString() == 'CONDITION_WARNING'}"
+                              class="px-2.5 py-0.5 rounded-md text-xs font-bold border bg-amber-100 text-amber-700 border-amber-200">
+                            Advertencia
+                        </span>
+                        <span th:if="${event.condition != null && event.condition.toString() == 'CONDITION_ACTIVE'}"
+                              class="px-2.5 py-0.5 rounded-md text-xs font-bold border bg-green-100 text-green-700 border-green-200">
+                            Operativo
+                        </span>
+                    </td>
+
+                    <td class="p-4 text-slate-600 font-medium" th:text="${event.description}"></td>
+
+                    <td class="p-4 text-center">
+                        <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-1 rounded-md">
+                            Persistido
+                        </span>
+                    </td>
+
+                    <td th:if="${isAdmin}" class="p-4 text-right">
+                        <div th:if="${event.id != null}">
+                            <form th:action="@{'/eventos/eliminar/' + ${event.id}}" method="POST"
+                                  onsubmit="return confirm('¿Está seguro de que desea eliminar este evento del reporte? Esta acción no se puede deshacer.');">
+                                <button type="submit" class="text-xs font-medium text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-md transition-all">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
+                        <div th:unless="${event.id != null}">
+                            <span class="text-xs text-slate-300 italic">Automático</span>
+                        </div>
+                    </td>
+                    <td th:unless="${isAdmin}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
 </main>
+
 <footer th:replace="~{common/layout :: footer}"></footer>
+
 </body>
 </html>

@@ -1,11 +1,103 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{common/layout :: head}"></head>
-<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen
-             flex flex-col justify-between">
-<header th:replace="~{common/layout :: header}"></header>
-<main>
 
+<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen flex flex-col">
+
+<header th:replace="~{common/layout :: header}"></header>
+
+<div sec:authorize="isAuthenticated()" class="bg-blue-50 border-b border-blue-200 py-2">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center text-sm">
+        <div class="text-blue-800 font-medium">
+            <i class="fa-solid fa-user-shield mr-1"></i>
+            Administrador conectado: <span class="font-bold text-blue-950" sec:authentication="name"></span>
+        </div>
+    </div>
+</div>
+
+<main class="flex-1">
+    <section class="max-w-7xl mx-auto px-4 py-10">
+        <h1 class="text-2xl font-bold">Estados Hospital San Rafael Tunja</h1>
+        <p class="text-gray-500">Monitoreo de sistemas del hospital</p>
+
+        <div id="global-status" class="mt-4 inline-block px-4 py-2 rounded font-bold"
+             th:classappend="${globalStatus == 'CONDITION_ERROR'} ? 'bg-red-100 text-red-700' : (${globalStatus == 'CONDITION_WARNING'} ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700')"
+             th:text="${globalStatus == 'CONDITION_ERROR'} ? 'Sistemas con fallas críticas' : (${globalStatus == 'CONDITION_WARNING'} ? 'Sistemas con degradación parcial' : 'Todos los sistemas operativos')">
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 pb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div th:each="product : ${products}"
+                 class="bg-white p-5 rounded border shadow-sm">
+
+                <div class="flex justify-between">
+                    <h3 class="font-bold" th:text="${product.name}"></h3>
+
+                    <div class="w-3 h-3 rounded-full"
+                         th:classappend="${product.condition == 'CONDITION_ERROR'} ? 'bg-red-500' : (${product.condition == 'CONDITION_WARNING'} ? 'bg-yellow-500' : 'bg-green-500')">
+                    </div>
+                </div>
+
+                <p class="font-semibold mt-1"
+                   th:classappend="${product.condition == 'CONDITION_ERROR'} ? 'text-red-600' : (${product.condition == 'CONDITION_WARNING'} ? 'text-yellow-600' : 'text-green-600')"
+                   th:text="${product.condition == 'CONDITION_ERROR'} ? 'Falla del servicio' : (${product.condition == 'CONDITION_WARNING'} ? 'Degradación parcial' : 'Operativo')">
+                </p>
+
+                <div class="mt-4">
+                    <p class="text-sm font-medium mb-1">
+                        RAM: <span th:text="${product.ramUsage + '%'}"></span>
+                    </p>
+                    <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                        <div class="h-2 rounded-full"
+                             th:classappend="${product.ramUsage > 90} ? 'bg-red-500' : 'bg-blue-500'"
+                             th:style="'width:' + ${product.ramUsage} + '%'">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <p class="text-sm font-medium mb-1">
+                        DISCO: <span th:text="${product.diskUsage + '%'}"></span>
+                    </p>
+                    <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                        <div class="h-2 rounded-full"
+                             th:classappend="${product.diskUsage > 90} ? 'bg-red-500' : 'bg-green-500'"
+                             th:style="'width:' + ${product.diskUsage} + '%'">
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-gray-400 mt-3"
+                   th:text="${'Último reporte: ' + product.lastReport}">
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 pb-10">
+        <h2 class="text-xl font-bold mb-4">Incidentes recientes</h2>
+        <div class="space-y-3">
+            <div th:each="product : ${products}">
+                <div th:each="event : ${product.events}"
+                     class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm mb-3">
+
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-1 text-xs font-bold rounded-full"
+                              th:classappend="${event.condition.name() == 'CONDITION_ERROR'} ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'"
+                              th:text="${event.condition.name() == 'CONDITION_ERROR'} ? 'Crítico' : 'Advertencia'">
+                        </span>
+
+                        <span class="text-sm font-semibold text-slate-800" th:text="${product.name}"></span>
+                    </div>
+                    <p class="text-sm text-slate-600" th:text="${event.description}"></p>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
+
 <footer th:replace="~{common/layout :: footer}"></footer>
 </body>
 </html>

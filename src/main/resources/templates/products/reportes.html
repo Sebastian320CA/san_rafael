@@ -1,11 +1,106 @@
 <!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
 <head th:replace="~{common/layout :: head}"></head>
-<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen
-             flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen flex flex-col justify-between">
 <header th:replace="~{common/layout :: header}"></header>
-<main>
 
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-8">
+        <form th:action="@{/reportes}" method="get" class="flex flex-wrap items-end gap-4">
+
+            <div class="flex-1 min-w-[250px]">
+                <label for="product-selector" class="block text-xs font-bold text-slate-400 uppercase mb-2">
+                    Seleccionar Servidor
+                </label>
+                <select id="product-selector" name="productId" required
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm bg-white font-medium text-slate-700">
+                    <option value="">Seleccione un servidor</option>
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}"
+                            th:selected="${selectedProductId == product.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="w-full sm:w-auto">
+                <label for="date-filter" class="block text-xs font-bold text-slate-400 uppercase mb-2">
+                    Filtrar por Fecha
+                </label>
+                <input type="date" id="date-filter" name="date" th:value="${selectedDate}"
+                       class="w-full px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500">
+            </div>
+
+            <button type="submit"
+                    class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-sm transition-all shadow-sm">
+                Buscar Reportes
+            </button>
+        </form>
+    </section>
+
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+        <h2 class="text-lg font-bold text-slate-800 mb-4">Historial de Estado y Métricas</h2>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                <tr class="border-b border-slate-100 text-slate-400 font-medium bg-slate-50">
+                    <th class="p-4">Fecha de Control</th>
+                    <th class="p-4">Uso de RAM</th>
+                    <th class="p-4">Uso de Disco</th>
+                    <th class="p-4">Incidentes Detectados</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-700">
+
+                <tr th:if="${reports == null || reports.isEmpty()}">
+                    <td colspan="4" class="p-8 text-center text-slate-400 font-medium">
+                        No se encontraron registros para los filtros seleccionados.
+                    </td>
+                </tr>
+
+                <tr th:each="report : ${reports}" class="hover:bg-slate-50/50 transition-colors">
+                    <td class="p-4 font-medium text-slate-600"
+                        th:text="${#dates.format(report.date, 'dd/MM/yyyy HH:mm')}">
+                    </td>
+
+                    <td class="p-4 font-mono font-semibold" th:text="${report.ramPercentage + '%'}"></td>
+                    <td class="p-4 font-mono font-semibold" th:text="${report.diskPercentage + '%'}"></td>
+
+                    <td class="p-4">
+                        <span th:if="${#lists.isEmpty(report.events)}"
+                              class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-green-50 text-green-700 border border-green-200">
+                            Sistemas Operativos
+                        </span>
+
+                        <div th:unless="${#lists.isEmpty(report.events)}" class="flex flex-col gap-1.5">
+                            <div th:each="event : ${report.events}" class="flex items-start gap-2 text-xs border border-slate-100 bg-slate-50 p-2 rounded-lg">
+
+                                <span th:if="${event.condition == 'CONDITION_ERROR'}"
+                                      class="px-1.5 py-0.5 rounded text-[10px] font-black bg-red-100 text-red-700 uppercase">
+                                    Crítico
+                                </span>
+                                <span th:if="${event.condition == 'CONDITION_WARNING'}"
+                                      class="px-1.5 py-0.5 rounded text-[10px] font-black bg-amber-100 text-amber-700 uppercase">
+                                    Alerta
+                                </span>
+                                <span th:if="${event.condition == 'CONDITION_ACTIVE'}"
+                                      class="px-1.5 py-0.5 rounded text-[10px] font-black bg-green-100 text-green-700 uppercase">
+                                    OK
+                                </span>
+
+                                <span class="text-slate-600" th:text="${event.description}"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
+
 <footer th:replace="~{common/layout :: footer}"></footer>
 </body>
 </html>

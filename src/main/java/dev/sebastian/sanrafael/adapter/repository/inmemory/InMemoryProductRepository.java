@@ -30,8 +30,31 @@ public class InMemoryProductRepository implements ProductRepository {
     }
 
     @Override
+    public Product findById(Long id) {
+
+        return products.stream()
+                .filter(p -> p.id().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public void saveProduct(Product product) {
         products.add(product);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+
+        deleteById(product.id());
+
+        products.add(product);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+        products.removeIf(p -> p.id().equals(id));
     }
 
     @Override

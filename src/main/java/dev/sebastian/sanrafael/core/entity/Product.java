@@ -9,6 +9,7 @@ import java.util.List;
  * Jpa para su funcionamiento.
  * */
 public record Product(
+        Long id,
         String name,
         List<Report> reports,
         URL healthURL

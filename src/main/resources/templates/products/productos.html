@@ -1,10 +1,121 @@
 <!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
 <head th:replace="~{common/layout :: head}"></head>
-<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen
-             flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-900 font-sans pt-32 min-h-screen flex flex-col justify-between">
 <header th:replace="~{common/layout :: header}"></header>
-<main>
 
+<main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-10">
+        <h1 class="text-xl font-bold text-slate-800 mb-2">Registrar Servidor Hospitalario</h1>
+        <p class="text-sm text-slate-500 mb-6">Añada una nueva infraestructura al sistema de monitoreo en tiempo real.</p>
+
+        <form th:action="${productEdit != null} ?
+                  @{/productos/actualizar} :
+                  @{/productos}"
+              method="post"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <input type="hidden"
+                   name="id"
+                   th:value="${productEdit != null ? productEdit.id : ''}">
+
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2"
+                       for="productName">
+                    Nombre del Servidor / Servicio
+                </label>
+
+                <input type="text"
+                       id="productName"
+                       name="productName"
+                       required
+                       th:value="${productEdit != null ? productEdit.name : ''}"
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2"
+                       for="healthUrl">
+                    URL del Endpoint de Salud (Health)
+                </label>
+
+                <input type="url"
+                       id="healthUrl"
+                       name="healthUrl"
+                       required
+                       th:value="${productEdit != null ? productEdit.healthUrl : ''}"
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-200">
+            </div>
+
+            <div class="md:col-span-2 flex justify-end">
+
+                <button type="submit"
+                        class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-medium text-sm rounded-xl shadow-sm transition-all">
+
+            <span th:text="${productEdit != null} ?
+                  'Actualizar Producto' :
+                  'Guardar e Iniciar Monitoreo'">
+            </span>
+
+                </button>
+
+            </div>
+
+        </form>
+    </section>
+
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-6">Infraestructura Monitoreada</h2>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                <tr class="border-b border-slate-100 text-slate-400 font-medium bg-slate-50">
+                    <th class="p-4 rounded-l-xl">ID</th>
+                    <th class="p-4">Nombre del Sistema</th>
+                    <th class="p-4">Dirección del Endpoint (URL)</th>
+                    <th class="p-4 text-center rounded-r-xl">Acciones</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-700">
+
+                <tr th:each="product : ${products}">
+
+                    <td class="p-4 font-semibold text-slate-400"
+                        th:text="${product.id}">
+                    </td>
+
+                    <td class="p-4 font-bold text-slate-800"
+                        th:text="${product.name}">
+                    </td>
+
+                    <td class="p-4 text-slate-500 font-mono text-xs"
+                        th:text="${product.healthUrl}">
+                    </td>
+
+                    <td class="p-4 text-center flex gap-2 justify-center">
+
+                        <a th:href="@{/productos/editar/{id}(id=${product.id})}"
+                           class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs">
+                            Editar
+                        </a>
+
+                        <form th:action="@{/productos/eliminar/{id}(id=${product.id})}"
+                              method="post">
+
+                            <button type="submit"
+                                    class="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs">
+                                Eliminar
+                            </button>
+                        </form>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
 <footer th:replace="~{common/layout :: footer}"></footer>
 </body>

@@ -8,7 +8,7 @@ import java.util.List;
 public record ReportDTO(
         Date date,
         List<Event> events,
-        int ramUsagePercentage,
-        int diskUsagePercentage
+        int ramPercentage,
+        int diskPercentage
 ) {
 }
